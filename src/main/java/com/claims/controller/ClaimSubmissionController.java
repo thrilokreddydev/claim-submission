@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.claims.dao.ClaimStatusDAO;
 import com.claims.dao.ClaimsDAO;
+import com.claims.model.ClaimStatus;
 import com.claims.model.Claims;
 import com.claims.processor.ClaimSubmissionProcessor;
 
@@ -19,6 +21,9 @@ public class ClaimSubmissionController {
 	
 	@Autowired
 	private ClaimsDAO claimsDAO;
+	
+	@Autowired
+	private ClaimStatusDAO claimStatusDAO;
 	
 	@Autowired
 	private ClaimSubmissionProcessor claimSubmissionProcessor;
@@ -34,6 +39,11 @@ public class ClaimSubmissionController {
 			return "Claim Already Exist";
 		}
 		claimsDAO.save(claim);
+		ClaimStatus status = new ClaimStatus();
+		status.setClaimId(claim.getClaimId());
+		status.setStatus("Under Review");
+		claimStatusDAO.save(status);
+		
 		return "Claim Submitted";		
 	}
 	
