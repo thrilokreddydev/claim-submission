@@ -1,16 +1,18 @@
-package com.claims.model;
+package com.claim.entity;
+
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
+import javax.persistence.Transient;
 
 @Entity
-public class Claims {
+public class Claim {
 	
 	@Id
 	@Column(unique = true, nullable=false)
-	private int claimId;
+	private long claimId;
 	@Column(nullable = false)
 	private String firstName;
 	@Column(nullable = false)
@@ -24,7 +26,7 @@ public class Claims {
 	@Column(nullable = false)
 	private String claimReason;
 	@Column(nullable = false)
-	private long claimAmount;
+	private BigDecimal claimAmount;
 	@Column(nullable=false)
 	private String vehicleVin;
 	@Column(nullable = false)
@@ -33,11 +35,13 @@ public class Claims {
 	private String licenseNum;
 	@Column(nullable = false)
 	private long lossDate;
+	@Transient
+	private String claimStatus;
 	
-	public int getClaimId() {
+	public long getClaimId() {
 		return claimId;
 	}
-	public void setClaimId(int claimId) {
+	public void setClaimId(long claimId) {
 		this.claimId = claimId;
 	}
 	public String getFirstName() {
@@ -76,10 +80,10 @@ public class Claims {
 	public void setClaimReason(String claimReason) {
 		this.claimReason = claimReason;
 	}
-	public long getClaimAmount() {
+	public BigDecimal getClaimAmount() {
 		return claimAmount;
 	}
-	public void setClaimAmount(long claimAmount) {
+	public void setClaimAmount(BigDecimal claimAmount) {
 		this.claimAmount = claimAmount;
 	}
 	public String getVehicleVin() {
@@ -105,6 +109,12 @@ public class Claims {
 	}
 	public void setLossDate(long lossDate) {
 		this.lossDate = lossDate;
+	}
+	public String getClaimStatus() {
+		return claimStatus;
+	}
+	public void setClaimStatus(String claimStatus) {
+		this.claimStatus = claimStatus;
 	}
 
 }

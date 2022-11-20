@@ -1,4 +1,4 @@
-package com.claims.config;
+package com.claim.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,26 +10,17 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-	
+
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-	    http
-	         .csrf().disable()
-	         .authorizeRequests().anyRequest().authenticated()
-	         .and()
-	         .httpBasic();
-
-	    return http.build();
+		http.csrf().disable().cors().and().authorizeRequests().anyRequest().authenticated().and().httpBasic();
+		return http.build();
 	}
 
 	@Bean
 	public InMemoryUserDetailsManager userDetailsService() {
-	    UserDetails user = User
-	        .withUsername("user")
-	        .password("{noop}password")
-	        .roles("USER")
-	        .build();
-	   return new InMemoryUserDetailsManager(user);
+		UserDetails user = User.withUsername("user").password("{noop}password").roles().build();
+		return new InMemoryUserDetailsManager(user);
 	}
 
 }
