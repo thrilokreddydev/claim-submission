@@ -7,7 +7,7 @@ import com.claims.dao.ClaimsDAO;
 import com.claims.model.Claims;
 
 @Component
-public class ClaimProcessor {
+public class ClaimSubmissionProcessor {
 	
 	@Autowired
 	private ClaimsDAO claimsDAO;

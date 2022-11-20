@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.claims.dao.ClaimsDAO;
 import com.claims.model.Claims;
-import com.claims.processor.ClaimProcessor;
+import com.claims.processor.ClaimSubmissionProcessor;
 
 @RestController
-public class ClaimsController {
+public class ClaimSubmissionController {
 	
 	@Autowired
 	private ClaimsDAO claimsDAO;
 	
 	@Autowired
-	private ClaimProcessor claimProcessor;
+	private ClaimSubmissionProcessor claimSubmissionProcessor;
 	
 	@PostMapping(path="/submitClaim")
 	public String submitClaim(@RequestBody Claims claim) {
@@ -29,7 +29,7 @@ public class ClaimsController {
 		Random rand = new Random();
 		int generatedId = 100000 + rand.nextInt(900000);
 		claim.setClaimId(generatedId);
-		Claims verifyClaim = claimProcessor.checkClaim(claim.getVehicleVin());
+		Claims verifyClaim = claimSubmissionProcessor.checkClaim(claim.getVehicleVin());
 		if(!StringUtils.isEmpty(verifyClaim)) {
 			return "Claim Already Exist";
 		}
