@@ -41,7 +41,6 @@ public class ClaimSubmissionController {
 		claimsDAO.save(claim);
 		ClaimStatus status = new ClaimStatus();
 		status.setClaimId(claim.getClaimId());
-		status.setStatus("Under Review");
 		claimStatusDAO.save(status);
 		
 		return "Claim Submitted";		
