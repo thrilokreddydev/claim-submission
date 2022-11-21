@@ -62,6 +62,8 @@ public class ClaimController {
 	public ResponseEntity<?> updateClaimStatus(@RequestBody ClaimStatus status) {
 		try {
 			return ResponseEntity.ok().body(claimProcessor.updateClaimStatus(status));
+		}catch (ValidationException ve) {
+			return ResponseEntity.badRequest().body(ve.getMessage());
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().body("Error occured while updating status | " + e.getMessage());
 		}

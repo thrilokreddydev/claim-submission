@@ -15,7 +15,7 @@ public class ClientConfig {
 	@Value("${claimProcess.password}")
 	private String password;
 	
-	@Bean(name="resTemplate")
+	@Bean(name="restTemplate")
 	public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
 		return restTemplateBuilder.basicAuthentication(userId, password).build();
 	}

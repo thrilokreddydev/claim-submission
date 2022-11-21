@@ -16,14 +16,14 @@ import com.claim.entity.ClaimStatus;
 public class ClaimStatusDelegator {
 	
 	@Autowired
-	@Qualifier("resTemplate")
+	@Qualifier("restTemplate")
 	private RestTemplate restTemplate;
 	
 	@Value("${claimProcess.URL}")
 	private String endpoint;
 	
-	private String updateStatus = "/updateClaimStatus";
-	private String getStatus ="/getClaimStatus/";
+	private static final String updateStatus = "/updateClaimStatus";
+	private static final String getStatus ="/getClaimStatus/";
 	
 	public ClaimStatus updateClaimStatus (ClaimStatus claimStatus){
 		
@@ -36,9 +36,8 @@ public class ClaimStatusDelegator {
 	
 	public ClaimStatus retrieveClaimStatus (long id){
 		
-		endpoint=endpoint+getStatus+id;
 		HttpEntity<Long> claimId = new HttpEntity<Long>(id);
-		ResponseEntity<ClaimStatus> response = restTemplate.exchange(endpoint, HttpMethod.GET,claimId,new ParameterizedTypeReference<ClaimStatus>() {
+		ResponseEntity<ClaimStatus> response = restTemplate.exchange(endpoint+getStatus+id, HttpMethod.GET,claimId,new ParameterizedTypeReference<ClaimStatus>() {
 		});
 		return response.getBody();
 		

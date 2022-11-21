@@ -54,7 +54,11 @@ public class ClaimProcessor {
 		return claimsList;
 	}
 	
-	public ClaimStatus updateClaimStatus(ClaimStatus claimStatus) {
+	public ClaimStatus updateClaimStatus(ClaimStatus claimStatus) throws ValidationException {
+		Claim claim = claimsDAO.findByClaimId(claimStatus.getClaimId());
+		if (claim == null) {
+			throw new ValidationException("No claim exist with Id: " + claimStatus.getClaimId());
+		}
 		return statusDelegator.updateClaimStatus(claimStatus);
 	}
 
