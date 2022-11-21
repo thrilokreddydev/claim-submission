@@ -29,9 +29,9 @@ public class ClaimProcessor {
 			throw new ValidationException("Claim already exist with Id: " + existingClaim.getClaimId());
 		}
 		claim.setClaimId(Instant.now().getEpochSecond());
+		claim.setClaimType("Auto");
 		ClaimStatus status = new ClaimStatus();
 		status.setClaimId(claim.getClaimId());
-		status.setClaimStatus(claim.getClaimStatus());
 		statusDelegator.updateClaimStatus(status);
 		return claimsDAO.save(claim);
 	}
