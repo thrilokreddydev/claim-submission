@@ -32,7 +32,7 @@ public class ClaimProcessor {
 		ClaimStatus status = new ClaimStatus();
 		status.setClaimId(claim.getClaimId());
 		status.setClaimStatus(claim.getClaimStatus());
-		//statusDelegator.updateClaimStatus(status);
+		statusDelegator.updateClaimStatus(status);
 		return claimsDAO.save(claim);
 	}
 
@@ -47,7 +47,11 @@ public class ClaimProcessor {
 	}
 
 	public List<Claim> getAllClaims() {
-		return claimsDAO.findAll();
+		List<Claim> claimsList = claimsDAO.findAll();
+		for(Claim existingClaim : claimsList) {
+			existingClaim.setClaimStatus(statusDelegator.retrieveClaimStatus(existingClaim.getClaimId()).getClaimStatus());
+		}		
+		return claimsList;
 	}
 	
 	public ClaimStatus updateClaimStatus(ClaimStatus claimStatus) {
