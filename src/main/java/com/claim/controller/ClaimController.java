@@ -1,6 +1,5 @@
 package com.claim.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -35,7 +34,6 @@ public class ClaimController {
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().body("Error occured while saving claim | " + e.getMessage());
 		}
-
 	}
 
 	@GetMapping("/{id}")
@@ -45,7 +43,8 @@ public class ClaimController {
 		} catch (NoResultsException nre) {
 			return ResponseEntity.badRequest().body(nre.getMessage());
 		} catch (Exception e) {
-			return ResponseEntity.internalServerError().body("Error occured while retrieving claim | " + e.getMessage());
+			return ResponseEntity.internalServerError()
+					.body("Error occured while retrieving claim | " + e.getMessage());
 		}
 	}
 
@@ -54,15 +53,16 @@ public class ClaimController {
 		try {
 			return ResponseEntity.ok().body(claimProcessor.getAllClaims());
 		} catch (Exception e) {
-			return ResponseEntity.internalServerError().body("Error occured while retrieving claims | " + e.getMessage());
+			return ResponseEntity.internalServerError()
+					.body("Error occured while retrieving claims | " + e.getMessage());
 		}
 	}
-	
+
 	@PutMapping()
 	public ResponseEntity<?> updateClaimStatus(@RequestBody ClaimStatus status) {
 		try {
 			return ResponseEntity.ok().body(claimProcessor.updateClaimStatus(status));
-		}catch (ValidationException ve) {
+		} catch (ValidationException ve) {
 			return ResponseEntity.badRequest().body(ve.getMessage());
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().body("Error occured while updating status | " + e.getMessage());

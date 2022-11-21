@@ -18,7 +18,7 @@ public class ClaimProcessor {
 
 	@Autowired
 	private ClaimsDAO claimsDAO;
-	
+
 	@Autowired
 	private ClaimStatusDelegator statusDelegator;
 
@@ -37,7 +37,6 @@ public class ClaimProcessor {
 	}
 
 	public Claim getClaim(long id) throws NoResultsException {
-
 		Claim claim = claimsDAO.findByClaimId(id);
 		if (claim == null) {
 			throw new NoResultsException("No claim exist with Id: " + id);
@@ -48,12 +47,13 @@ public class ClaimProcessor {
 
 	public List<Claim> getAllClaims() {
 		List<Claim> claimsList = claimsDAO.findAll();
-		for(Claim existingClaim : claimsList) {
-			existingClaim.setClaimStatus(statusDelegator.retrieveClaimStatus(existingClaim.getClaimId()).getClaimStatus());
-		}		
+		for (Claim existingClaim : claimsList) {
+			existingClaim
+					.setClaimStatus(statusDelegator.retrieveClaimStatus(existingClaim.getClaimId()).getClaimStatus());
+		}
 		return claimsList;
 	}
-	
+
 	public ClaimStatus updateClaimStatus(ClaimStatus claimStatus) throws ValidationException {
 		Claim claim = claimsDAO.findByClaimId(claimStatus.getClaimId());
 		if (claim == null) {
@@ -61,5 +61,4 @@ public class ClaimProcessor {
 		}
 		return statusDelegator.updateClaimStatus(claimStatus);
 	}
-
 }
