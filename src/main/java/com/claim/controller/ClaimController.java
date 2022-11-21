@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.claim.entity.Claim;
+import com.claim.entity.ClaimStatus;
 import com.claim.exception.NoResultsException;
 import com.claim.exception.ValidationException;
 import com.claim.processor.ClaimProcessor;
@@ -53,6 +55,17 @@ public class ClaimController {
 			return ResponseEntity.ok().body(claimProcessor.getAllClaims());
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().body("Error occured while retrieving claims | " + e.getMessage());
+		}
+	}
+	
+	@PutMapping()
+	public ResponseEntity<?> updateClaimStatus(@RequestBody ClaimStatus status) {
+		try {
+			return ResponseEntity.ok().body(claimProcessor.updateClaimStatus(status));
+		}catch (ValidationException ve) {
+			return ResponseEntity.badRequest().body(ve.getMessage());
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body("Error occured while updating status | " + e.getMessage());
 		}
 	}
 
